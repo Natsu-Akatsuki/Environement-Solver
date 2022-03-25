@@ -1,0 +1,5 @@
+# origin(regex)    modify
+frame_id.*=.*"/ frame_id = "
+# loam-horizon
+"/camera_init" "camera_init"
+"/aft_mapped" "aft_mapped"
