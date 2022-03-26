@@ -1,7 +1,8 @@
-import pysed
-import glob
 import argparse
+import glob
 from pathlib import Path
+
+import pysed
 
 
 def api_replace(src_dir, reg, pattern_file):
@@ -16,22 +17,23 @@ def api_replace(src_dir, reg, pattern_file):
             pysed.replace(replace[0], replace[1], file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="arg parser")
-
-    parser.add_argument('--src', type=str, default=None, help='specify the config for evaluation')
+    # todo: add hint
+    parser.add_argument("--src", type=str, default=None, help="specify the src dir for replacing")
+    parser.add_argument("--reg", type=str, default=None, help="specify the reg file for replacing")
     args = parser.parse_args()
 
     src_dir = str(Path(args.src).resolve())
+    pattern_file = str(Path(args.reg).resolve())
 
-    pattern_file = "replace/opencv_replace.txt"
-    api_replace(src_dir, "**/*.cpp", pattern_file)
+    # pattern_file = "replace/common/opencv.replace"
+    # api_replace(src_dir, "/**/*.cpp", pattern_file)
+    #
+    # pattern_file = "replace/common/opencv.replace"
+    # api_replace(src_dir, "/**/*.cc", pattern_file)
+    #
+    # pattern_file = "replace/common/CMakeLists.replace"
+    # api_replace(src_dir, "/**/CMakeLists.txt", pattern_file)
 
-    pattern_file = "replace/opencv_replace.txt"
-    api_replace(src_dir, "**/*.cc", pattern_file)
-
-    pattern_file = "replace/CMakeLists_replace.txt"
-    api_replace(src_dir, "**/CMakeLists.txt", pattern_file)
-
-    pattern_file = "replace/ros_replace.txt"
-    api_replace(src_dir, "**/*.cpp", pattern_file)
+    api_replace(src_dir, "/**/*.cpp", pattern_file)

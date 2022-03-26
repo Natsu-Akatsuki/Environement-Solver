@@ -1,0 +1,7 @@
+# origin(regex)    modify
+frame_id.*=.*"/ frame_id = "
+# kaho-slam
+"/map" "map"
+"/vehicle_link" "vehicle_link"
+"/imu_link" "imu_link"
+"/velo_link" "velo_link"
