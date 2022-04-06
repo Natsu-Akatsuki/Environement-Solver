@@ -1,39 +1,35 @@
 import argparse
 import glob
 from pathlib import Path
-
+from easydict import EasyDict
 import pysed
+import yaml
 
 
-def api_replace(src_dir, reg, pattern_file):
-    match_files = glob.glob(src_dir + reg, recursive=True)
-    with open(pattern_file, "r") as sources:
-        replaces = sources.readlines()[1:]
+def api_replace(src_dir, posix, regexes):
+    match_files = glob.glob(src_dir + posix, recursive=True)
     for file in match_files:
-        for replace in replaces:
-            replace = replace.strip().split(maxsplit=1)
-            if replace[0][0] == "#":
-                continue
-            pysed.replace(replace[0], replace[1], file)
+        for regex in regexes:
+            regex = regex.strip().split(maxsplit=1)
+            pysed.replace(regex[0], regex[1], file)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="arg parser")
     # todo: add hint
-    parser.add_argument("--src", type=str, default=None, help="specify the src dir for replacing")
-    parser.add_argument("--reg", type=str, default=None, help="specify the reg file for replacing")
+    parser.add_argument("--cfg", type=str, default=None, help="specify the reg config for replacing")
     args = parser.parse_args()
 
-    src_dir = str(Path(args.src).resolve())
-    pattern_file = str(Path(args.reg).resolve())
+    cfg = args.cfg
+    with open(cfg, 'r') as f:
+        cfg = yaml.load(f, Loader=yaml.FullLoader)
+    cfg = EasyDict(cfg)
 
-    # pattern_file = "replace/common/opencv.replace"
-    # api_replace(src_dir, "/**/*.cpp", pattern_file)
-    #
-    # pattern_file = "replace/common/opencv.replace"
-    # api_replace(src_dir, "/**/*.cc", pattern_file)
-    #
-    # pattern_file = "replace/common/CMakeLists.replace"
-    # api_replace(src_dir, "/**/CMakeLists.txt", pattern_file)
+    for i in range(len(cfg.FILE)):
+        replace = cfg.FILE[i].REPLCAE
+        dir = replace.DIR
+        posix = replace.POSIX
+        regex = replace.REGEX
 
-    api_replace(src_dir, "/**/*.cpp", pattern_file)
+        dir = str(Path(dir).resolve())
+        api_replace(dir, posix, regex)

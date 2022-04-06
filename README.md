@@ -10,7 +10,7 @@ After **TEDIOUS**, **REDUNDANT** migration operations from ubuntu 16.04/18.04 to
 ## Requirement
 
 ```bash
-$ pip3 install pathlib
+$ pip3 install pathlib easydict
 ```
 
 ## Migration
@@ -21,7 +21,7 @@ $ pip3 install pathlib
 
 ### CMakeLists
 
-- obeyPolicy CMP0048 (i.e. VERSION 2.8.3 -> VERSION 3.16.0)
+- obey Policy CMP0048 (i.e. VERSION 2.8.3 -> VERSION 3.16.0)
 - C++11 -> C++14 (`CMAKE_CXX_FLAGS`)
 
 ### Ros
@@ -32,28 +32,29 @@ $ pip3 install pathlib
 
 The repositories tested are as follows.
 
+- CMakeLists example
+
+```bash
+$ python3 migration.py --cfg=config/CMakeLists.yml
+```
+
 - [vins-fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion.git)
 
 ```bash
 $ git clone https://github.com/HKUST-Aerial-Robotics/VINS-Fusion.git
-$ migration.py --src=~/VINS-Fusion --reg=replace/common/CMakeLists.replace
-$ migration.py --src=~/VINS-Fusion --reg=replace/common/opencv.replace
+# modify the parameter in cfg
+$ python3 migration.py --cfg=config/vins_fusion.yml
 ```
+
+<img src="https://natsu-akatsuki.oss-cn-guangzhou.aliyuncs.com/img/image-20220406103824811.png" alt="image-20220406103824811" style="zoom: 80%;" />
 
 - [livox_horizon_loam](https://github.com/Livox-SDK/livox_horizon_loam.git)
 
 ```bash
 $ git clone https://github.com/Livox-SDK/livox_horizon_loam.git
-$ migration.py --src=~/livox_horizon_loam --reg=replace/example/horizon_slam.replace
-$ migration.py --src=~/livox_horizon_loam --reg=replace/common/CMakeLists.replace
+# modify the parameter in cfg
+$ python3 migration.py --cfg=config/horizon_slam.yml
 ```
-- [kaho slam](https://github.com/kahowang/sensor-fusion-for-localization-and-mapping.git)
-
-```bash
-$ git clone https://github.com/kahowang/sensor-fusion-for-localization-and-mapping.git
-$ migration.py --src=~/sensor-fusion-for-localization-and-mapping --reg=replace/example/kaho_slam.replace
-```
-
 ## Reference
 
 - [pysed](https://github.com/mahmoudadel2/pysed)

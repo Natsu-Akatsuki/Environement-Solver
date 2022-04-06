@@ -1,0 +1,16 @@
+FILE :
+  - REPLCAE:
+      DIR: '.'
+      POSIX: '/**/*.cpp'
+      REGEX: [
+      'frame_id.*=.*"/ frame_id = "',
+      '"/camera_init" "camera_init"',
+      '"/aft_mapped" "aft_mapped"'
+      ]
+  - REPLCAE:
+      DIR: '.'
+      POSIX: '/**/CMakeLists.txt'
+      REGEX: [
+      '-std=c..11 -std=c++14',
+      'VERSION.2.8.3 VERSION 3.16.0'
+      ]
