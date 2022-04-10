@@ -1,0 +1,8 @@
+FILE:
+  - REPLCAE:
+      DIR: 'OpenPCDet/pcdet/ops/'
+      POSIX: '/**/*.cpp'
+      REGEX: [
+          '#include..THC/THC.h.  ',
+          'extern.THCState..state;  ',
+      ]

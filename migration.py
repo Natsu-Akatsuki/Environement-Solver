@@ -11,6 +11,8 @@ def api_replace(src_dir, posix, regexes):
     for file in match_files:
         for regex in regexes:
             regex = regex.strip().split(maxsplit=1)
+            if len(regex) == 1:
+                regex.append('')
             pysed.replace(regex[0], regex[1], file)
 
 

@@ -55,6 +55,14 @@ $ git clone https://github.com/Livox-SDK/livox_horizon_loam.git
 # modify the parameter in cfg
 $ python3 migration.py --cfg=config/horizon_slam.yml
 ```
+- [OpenPCDet]()
+
+```bash
+$ git clone https://github.com/open-mmlab/OpenPCDet
+# modify the parameter in cfg
+$ python3 migration.py --cfg=config/openpcdet.yml
+```
+
 ## Reference
 
 - [pysed](https://github.com/mahmoudadel2/pysed)
