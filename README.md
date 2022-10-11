@@ -1,34 +1,61 @@
-# Migration Scripts
+# Environment Solver
 
-After **TEDIOUS**, **REDUNDANT** migration operations from ubuntu 16.04/18.04 to ubuntu20.04. It is necessary to write some scripts to automate the migration work, though some simple code...
+<div align="center">
 
+[English](README_en.md) | 简体中文
 
-<p align="center">
-<img src="https://natsu-akatsuki.oss-cn-guangzhou.aliyuncs.com/img/image-20220324205932211.png" alt="image-20220324205932211"  width=20% height=20% />
-</p>
+</div>
 
-## Requirement
+## 简介
+
+在调用别人的仓库时，往往可能因环境依赖问题，而出现接口冲突的情况。本仓库主要存放一些实现`API`替换的脚本，以避免在高版本环境下对低版本代码迁移时（e.g. `kinetic`/`melodic`->`noetic`）所涉及的重复替换工作。
+
+## 依赖
 
 ```bash
 $ pip3 install pathlib easydict
 ```
 
-## Migration
+## 功能
 
 ### C++
 
-- opencv3->opencv4.2 api
+- 迁移OpenCV API
+
+| OpenCV3                       | OpenCV 4.2                     |
+| ----------------------------- | ------------------------------ |
+| `CV_RGB2GRAY`                 | `cv::COLOR_RGB2GRAY`           |
+| `CV_GRAY2RGB`                 | `cv::COLOR_GRAY2RGB`           |
+| `CV_BGR2GRAY`                 | `cv::COLOR_BGR2GRAY`           |
+| `CV_GRAY2BGR`                 | `cv::COLOR_GRAY2BGR`           |
+| `CV_FONT_HERSHEY_SIMPLEX`     | `cv::FONT_HERSHEY_SIMPLEX`     |
+| `CV_LOAD_IMAGE_GRAYSCALE`     | `cv::IMREAD_GRAYSCALE`         |
+| `CV_MINMAX`                   | `cv::NORM_MINMAX`              |
+| `CV_AA`                       | `cv::LINE_AA`                  |
+| `CV_CALIB_CB_FILTER_QUADS`    | `cv::CALIB_CB_FILTER_QUADS`    |
+| `CV_CALIB_CB_ADAPTIVE_THRESH` | `cv::CALIB_CB_ADAPTIVE_THRESH` |
+| `CV_CALIB_CB_NORMALIZE_IMAGE` | `cv::CALIB_CB_NORMALIZE_IMAGE` |
+| `CV_CALIB_CB_FAST_CHECK`      | `cv::CALIB_CB_FAST_CHECK`      |
+| `CV_CHAIN_APPROX_SIMPLE`      | `cv::CHAIN_APPROX_SIMPLE`      |
+| `CV_TERMCRIT_EPS`             | `cv::TermCriteria::EPS`        |
+| `CV_TERMCRIT_ITER`            | `cv::TermCriteria::MAX_ITER`   |
+| `CV_CALIB_CB_FILTER_QUADS`    | `cv::CALIB_CB_FILTER_QUADS`    |
+| `CV_RETR_CCOMP`               | `cv::RETR_CCOMP`               |
+| `CV_SHAPE_CROSS`              | `cv::MORPH_CROSS`              |
+| `CV_SHAPE_CROSS`              | `cv::MORPH_CROSS`              |
+| `CV_SHAPE_RECT`               | `cv::MORPH_RECT`               |
+| `CV_ADAPTIVE_THRESH_MEAN_C `  | `cv::ADAPTIVE_THRESH_MEAN_C`   |
 
 ### CMakeLists
 
-- obey Policy CMP0048 (i.e. VERSION 2.8.3 -> VERSION 3.16.0)
-- C++11 -> C++14 (`CMAKE_CXX_FLAGS`)
+- 遵循`Policy CMP0048`，指定使用更高级的`CMake`版本（i.e. `VERSION 2.8.3` -> `VERSION 3.16.0`）
+- 使用更高级的C++标准，`C++11` -> `C++14`
 
-### Ros
+### ROS
 
-- strip any leading / character in frame_id (e.g `/camera` -> `camera`)
+- 移除`frame_id`前面的前导符（e.g `/camera` -> `camera`）
 
-## Usage
+## 参考用例
 
 The repositories tested are as follows.
 
@@ -63,6 +90,9 @@ $ git clone https://github.com/open-mmlab/OpenPCDet
 $ python3 migration.py --cfg=config/openpcdet.yml
 ```
 
-## Reference
+## TODO
+-[ ] 采用表格的方式存储`API`替换的映射关系，以便于后续的扩展
+
+## 参考资料
 
 - [pysed](https://github.com/mahmoudadel2/pysed)
