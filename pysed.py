@@ -9,9 +9,9 @@ import re
 def replace(oldstr, newstr, infile, dryrun=False):
     """
     Sed-like Replace function..
-    Usage: pysed.config(<Old string>, <Replacement String>, <Text File>)
-    Example: pysed.config('xyz', 'XYZ', '/path/to/file.txt')
-    Example 'DRYRUN': pysed.config('xyz', 'XYZ', '/path/to/file.txt', dryrun=True) #This will dump the output to STDOUT instead of changing the input file.
+    Usage: pysed.cfg(<Old string>, <Replacement String>, <Text File>)
+    Example: pysed.cfg('xyz', 'XYZ', '/path/to/file.txt')
+    Example 'DRYRUN': pysed.cfg('xyz', 'XYZ', '/path/to/file.txt', dryrun=True) #This will dump the output to STDOUT instead of changing the input file.
     """
     linelist = []
     with open(infile) as f:

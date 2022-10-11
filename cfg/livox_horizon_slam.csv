@@ -1,0 +1,6 @@
+Search DIR,.,
+File Pattern,/*/*.cpp,
+Regex Pattern,Replace,
+"frame_id.*=.*""/",frame_id = ,# 去掉前导符'/'
+"""/camera_init""","""camera_init""",
+"""/aft_mapped""","""aft_mapped""",

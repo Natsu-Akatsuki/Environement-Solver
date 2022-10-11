@@ -1,37 +1,35 @@
 import argparse
+import csv
 import glob
 from pathlib import Path
-from easydict import EasyDict
+
 import pysed
-import yaml
 
 
 def api_replace(src_dir, posix, regexes):
     match_files = glob.glob(src_dir + posix, recursive=True)
     for file in match_files:
         for regex in regexes:
-            regex = regex.strip().split(maxsplit=1)
-            if len(regex) == 1:
-                regex.append('')
             pysed.replace(regex[0], regex[1], file)
 
 
 if __name__ == "__main__":
+
+
     parser = argparse.ArgumentParser(description="arg parser")
     # todo: add hint
-    parser.add_argument("--cfg", type=str, default=None, help="specify the reg config for replacing")
-    args = parser.parse_args()
+    parser.add_argument("-c", "--cfg", nargs='+', help="specify the reg configs for replacing", required=True)
 
-    cfg = args.cfg
-    with open(cfg, 'r') as f:
-        cfg = yaml.load(f, Loader=yaml.FullLoader)
-    cfg = EasyDict(cfg)
+    csv_files = parser.parse_args()._get_kwargs()[0][1]
 
-    for i in range(len(cfg.FILE)):
-        replace = cfg.FILE[i].REPLCAE
-        dir = replace.DIR
-        posix = replace.POSIX
-        regex = replace.REGEX
+    for csv_file in csv_files:
+        with open(csv_file) as f:
+            csv_reader = list(csv.reader(f))
 
-        dir = str(Path(dir).resolve())
-        api_replace(dir, posix, regex)
+            search_dir = csv_reader[0][1]
+            file_patterns = csv_reader[1][1:]
+            for file_pattern in file_patterns:
+
+                regex = csv_reader[3:]
+                search_dir = str(Path(search_dir).resolve())
+                api_replace(search_dir, file_pattern, regex)
